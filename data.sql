@@ -1,6 +1,16 @@
--- Database untuk Sistem Pembelian Makanan
+-- Database untuk Sistem Pembelian Makanan (Updated)
 CREATE DATABASE IF NOT EXISTS resto_queue;
 USE resto_queue;
+
+-- Tabel Admin untuk Login
+CREATE TABLE admin (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    nama_lengkap VARCHAR(100) NOT NULL,
+    email VARCHAR(100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
 -- Tabel Menu Makanan
 CREATE TABLE menu (
@@ -36,13 +46,34 @@ CREATE TABLE detail_pesanan (
     FOREIGN KEY (menu_id) REFERENCES menu(id)
 );
 
+-- Tabel Pengaturan Toko (NEW)
+CREATE TABLE pengaturan_toko (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nama_toko VARCHAR(100) NOT NULL,
+    deskripsi TEXT,
+    logo VARCHAR(200),
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Insert default admin (username: admin, password: admin123)
+INSERT INTO admin (username, password, nama_lengkap, email) VALUES
+('admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Administrator', 'admin@warungmakan.com');
+
+-- Insert default pengaturan toko
+INSERT INTO pengaturan_toko (nama_toko, deskripsi) VALUES
+('Warung Makan Sederhana', 'Pesan makanan favoritmu dengan mudah!');
+
 -- Insert sample data menu
 INSERT INTO menu (nama, harga, kategori, gambar, status) VALUES
-('Nasi Goreng Special', 25000, 'Makanan', 'nasgor.jpg', 'tersedia'),
-('Mie Ayam', 20000, 'Makanan', 'mieayam.jpg', 'tersedia'),
-('Soto Ayam', 22000, 'Makanan', 'soto.jpg', 'tersedia'),
-('Ayam Geprek', 23000, 'Makanan', 'geprek.jpg', 'tersedia'),
-('Es Teh Manis', 5000, 'Minuman', 'esteh.jpg', 'tersedia'),
-('Es Jeruk', 7000, 'Minuman', 'esjeruk.jpg', 'tersedia'),
-('Jus Alpukat', 12000, 'Minuman', 'alpukat.jpg', 'tersedia'),
-('Kopi Hitam', 8000, 'Minuman', 'kopi.jpg', 'tersedia');
+('Nasi Goreng Special', 25000, 'Makanan', 'default.jpg', 'tersedia'),
+('Mie Ayam', 20000, 'Makanan', 'default.jpg', 'tersedia'),
+('Soto Ayam', 22000, 'Makanan', 'default.jpg', 'tersedia'),
+('Ayam Geprek', 23000, 'Makanan', 'default.jpg', 'tersedia'),
+('Nasi Uduk', 18000, 'Makanan', 'default.jpg', 'tersedia'),
+('Gado-Gado', 20000, 'Makanan', 'default.jpg', 'tersedia'),
+('Es Teh Manis', 5000, 'Minuman', 'default.jpg', 'tersedia'),
+('Es Jeruk', 7000, 'Minuman', 'default.jpg', 'tersedia'),
+('Jus Alpukat', 12000, 'Minuman', 'default.jpg', 'tersedia'),
+('Kopi Hitam', 8000, 'Minuman', 'default.jpg', 'tersedia'),
+('Es Campur', 15000, 'Minuman', 'default.jpg', 'tersedia'),
+('Teh Tarik', 10000, 'Minuman', 'default.jpg', 'tersedia');
